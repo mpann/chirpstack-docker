@@ -2,31 +2,22 @@ version: "3"
 
 services:
   chirpstack-network-server:
-    image: chirpstack/chirpstack-network-server:3
+    image: chirpstack/chirpstack-network-server:3.10.0
+    container_name: cs-nw-server
     volumes:
       - ./configuration/chirpstack-network-server:/etc/chirpstack-network-server
 
   chirpstack-application-server:
-    image: chirpstack/chirpstack-application-server:3
+    image: chirpstack/chirpstack-application-server:3.12.2
+    container_name: cs-app-server
     ports:
       - 8080:8080
     volumes:
       - ./configuration/chirpstack-application-server:/etc/chirpstack-application-server
 
-  chirpstack-gateway-bridge:
-    image: chirpstack/chirpstack-gateway-bridge:3
-    ports:
-      - 1700:1700/udp
-    volumes:
-      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
-
-  chirpstack-geolocation-server:
-    image: chirpstack/chirpstack-geolocation-server:3
-    volumes:
-      - ./configuration/chirpstack-geolocation-server:/etc/chirpstack-geolocation-server
-
   postgresql:
     image: postgres:9.6-alpine
+    container_name: cs-postgres
     environment:
       - POSTGRES_PASSWORD=root
     volumes:
@@ -35,14 +26,20 @@ services:
 
   redis:
     image: redis:5-alpine
+    container_name: cs-redis
     volumes:
       - redisdata:/data
 
   mosquitto:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:1.6.12-openssl
+    container_name: cs-mqtt
     ports:
-      - 1883:1883
+      - 1885:1883
+    volumes:
+      - ./configuration/mosquitto/:/mosquitto/config/
+      - mosquittoData:/mosquitto/data
 
 volumes:
   postgresqldata:
   redisdata:
+  mosquittoData:
