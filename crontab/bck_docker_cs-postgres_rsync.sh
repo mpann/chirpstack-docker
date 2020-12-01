@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Backup the cs-postgres docker db 
+# For 30 days (variable HIST="30")
+# To change the nb of days to keep the hist, change variable HIST="30" 
+
+
+
 if [ "$(docker ps -q -f name=cs-postgres)" ]; then
 	echo "Backup is running"
 	# Backup Docker DB
@@ -13,14 +19,12 @@ fi
 PathOri="/mnt/VM/docker/chirpstack/postgresqldata/"
 PathBackup="/mnt/BackupContainer/"
 Container="chirpstack"
-
 dbname="chirpstack_"
 dbnameCheck="chirpstack_as.dump"
 
 if [ ! -d $PathBackup$Container ]; then
 	mkdir -p $PathBackup$Container
 fi
-
 
 # Copy postgres dump DB
 DATE=$(date '+%Y-%m-%d_%Hh_%Mm_%Ss')
@@ -49,7 +53,7 @@ else
 fi
 
 if [ "$SIZE_DST" != "$SIZE_SRC" ]; then
-    # thingsboard
+	# thingsboard
 	apt-get update 
 	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' rsync |grep "install ok installed")
 	echo Checking for somelib: $PKG_OK
@@ -70,8 +74,5 @@ if [ "$SIZE_DST" != "$SIZE_SRC" ]; then
 
 	rsync  ${PathOri}/${dbname}*.dump  ${PathBackup}${Container}/${DATEDir}/${DATEDay}/${dbname}${DATE}
 
-
-else 
-	echo "Same file"
 fi
 
