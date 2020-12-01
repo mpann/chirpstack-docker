@@ -209,7 +209,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   # * gcp_pub_sub       - Google Cloud Pub/Sub
   # * kafka             - Kafka distributed streaming platform
   # * postgresql        - PostgreSQL database
-  enabled=["mqtt"]
+  enabled=[]
 
 
   # MQTT integration backend.
@@ -228,13 +228,13 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   retain_events=false
 
   # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-  server="tcp://83.166.154.87:1884"
+  server=""
 
   # Connect with the given username (optional)
-  username="railnet"
+  username=""
 
   # Connect with the given password (optional)
-  password="m0cbid"
+  password=""
 
   # Maximum interval that will be waited between reconnection attempts when connection is lost.
   # Valid units are 'ms', 's', 'm', 'h'. Note that these values can be combined, e.g. '24h30m15s'.
