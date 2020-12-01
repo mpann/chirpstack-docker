@@ -1,0 +1,2 @@
+# m h  dom mon dow   command
+0 * * * * /root/Jobs/crontab/bck_docker_cs-postgres_rsync.sh 2>/root/Jobs/crontab /logs/crontab_backup_cs-postgres_err.txt
